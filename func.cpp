@@ -168,6 +168,8 @@ void code_ctor(my_code * code, FILE * stream)
     assert(code->strings != NULL);
 
     get_indexes(code);
+
+    make_n_o(code);
 }
 
 size_t getnum_of_lines(struct my_code * cod)
@@ -181,7 +183,7 @@ size_t getnum_of_lines(struct my_code * cod)
             count++;
     }
 
-    return count + 1;
+    return count;
 }
 
 void get_indexes(my_code * code)
@@ -190,9 +192,9 @@ void get_indexes(my_code * code)
 
     code->strings[0] = code->text;
 
-    for (size_t i = 1; i < code->num_of_lines - 1; i++)
+    for (size_t i = 1; i < code->num_of_lines; i++)
     {
-        code->strings[i] = get_next_ptr(code->strings[0]);
+        code->strings[i] = get_next_ptr(code->strings[i - 1]);
     }
 }
 
@@ -212,10 +214,22 @@ char * get_next_ptr(char * pr_ptr)
 void code_dtor(my_code * code)
 {
     assert(code != NULL);
-    
+
     free(code->text);
     code->text = NULL;
     free(code->strings);
     code->strings = NULL;
     code = NULL;
 }
+
+void make_n_o(my_code * code)
+{
+    for (size_t i = 0; i < code->num_of_symbols + 1; i++)
+    {
+        if(code->text[i] == '\n')
+        {
+            code->text[i] = 0;
+        }
+    }
+}
+

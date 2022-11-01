@@ -9,6 +9,7 @@
 #include <math.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef int elem;
 
@@ -45,6 +46,14 @@ enum ErrorCodes
     BAD_STK_NAME     = 8
 };
 
+enum CommandCodes
+{
+    SYNTAXERROR = -1,
+    
+    PUSH =  1,
+    ADD  =  2
+};
+
 extern FILE * logfile;
 
 void  _stack_ctor(my_stack * stk, size_t cap, const char * p_name, const char * p_func, const char * p_file, int p_line);
@@ -74,5 +83,11 @@ void code_ctor(my_code * code, FILE * stream);
 void get_indexes(my_code * code);
 
 void code_dtor(my_code * code);
+
+void make_n_o(my_code * code);
+
+int get_command(char * command, int * n);
+
+void do_command(int command_num, int n);
 
 #endif
