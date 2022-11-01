@@ -29,6 +29,14 @@ struct my_stack
     struct var_info info;
 };
 
+struct my_code
+{
+    char ** strings;
+    char *  text;
+    size_t  num_of_symbols;
+    size_t  num_of_lines;
+};
+
 enum ErrorCodes
 {
     BAD_STK_POINTER  = 1,
@@ -49,10 +57,22 @@ void   stack_dump(my_stack * stk, const char * func_name, const char * file_name
 
 void   stack_dtor(my_stack * stk);
 
-void openlogfile(const char * name);
+void   openfile(const char * name);
 
-void stack_push(my_stack * stk, elem val);
+void   stack_push(my_stack * stk, elem val);
 
-void stack_pop(my_stack * stk, int * var);
+void   stack_pop(my_stack * stk, int * var);
+
+void   run_cpu(FILE * code);
+
+size_t getnum_of_lines(struct my_code * cod);
+
+char * get_next_ptr(char * pr_ptr);
+
+void code_ctor(my_code * code, FILE * stream);
+
+void get_indexes(my_code * code);
+
+void code_dtor(my_code * code);
 
 #endif

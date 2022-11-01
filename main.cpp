@@ -2,28 +2,16 @@
 
 int main(void)
 {
-    openlogfile("log.txt");
-    struct my_stack stk = {};
+    openfile("log.txt");
+    /*struct my_stack stk = {};
 
-    size_t cap = 10;
-    stack_ctor(&stk, cap);
+    stack_ctor(&stk, 10);*/
 
-    //stk.data = NULL;
-    stack_dump(&stk, LOCATION);
+    FILE * fp = fopen("cod.txt", "r");
+    run_cpu(fp);
 
-    for (int i = 0; i < 11; i++)
-    {
-        stack_push(&stk, 10);
-    }
-
-    int pop = 0;
-    stack_pop(&stk, &pop);
-    printf("pop - %d\n", pop);
-
-    stack_dump(&stk, LOCATION);
-
-    stack_dtor(&stk);
-
+    /*stack_dump(&stk, LOCATION);
+    stack_dtor(&stk);*/
     fclose(logfile);
     return 0;
 }
