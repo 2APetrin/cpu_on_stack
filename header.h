@@ -86,8 +86,6 @@ void code_dtor(my_code * code);
 
 void make_n_o(my_code * code);
 
-int get_command(char * command, int * n);
-
-void do_command(int command_num, int n);
+int  get_do_command(char * command, my_stack * stk);
 
 #endif

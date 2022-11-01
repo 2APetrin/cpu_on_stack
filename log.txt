@@ -1,0 +1,39 @@
+
+-----------------------------------------------------------------------
+   DUMP
+ was called:
+file - proc.cpp,
+func - void run_cpu(FILE*),
+line - 24
+
+   Stack info:
+element amount = 1
+stack capacity = 20
+pointer to data - 0x607000000100
+*[ 1] - 15
+ [ 2] - 0
+ [ 3] - 0
+ [ 4] - 0
+ [ 5] - 0
+ [ 6] - 0
+ [ 7] - 0
+ [ 8] - 0
+ [ 9] - 0
+ [10] - 0
+ [11] - 0
+ [12] - 0
+ [13] - 0
+ [14] - 0
+ [15] - 0
+ [16] - 0
+ [17] - 0
+ [18] - 0
+ [19] - 0
+ [20] - 0
+
+   Variable info:
+variable name - &stk
+creation file - proc.cpp
+creation func - void run_cpu(FILE*)
+creation line - 8
+-----------------------------------------------------------------------

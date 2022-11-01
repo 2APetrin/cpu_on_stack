@@ -15,44 +15,44 @@ void run_cpu(FILE * stream)
     printf("%s\n",  code.strings[2]);
     printf("%lu\n", code.num_of_lines);
     printf("%lu\n", code.num_of_symbols);*/
-    
-    int command_num = 0;
-    int num_of_letters_in_command = 0;
 
     for (size_t i = 0; i < code.num_of_lines; i++)
     {
-        command_num = get_command(code.strings[i], &num_of_letters_in_command);
-        do_command(command_num, num_of_letters_in_command);
+        get_do_command(code.strings[i], &stk);
     }
+
+    stack_dump(&stk, LOCATION);
 
     code_dtor(&code);
     stack_dtor(&stk);
 }
 
-int get_command(char * command, int * n)
+int get_do_command(char * command, my_stack * stk)
 {
     char cmd[10];
-    sscanf(command, "%s%n", cmd, n);
-
-    //printf("%s", cmd);
+    int  n = 0;
+    sscanf(command, "%s%n", cmd, &n);
 
     if(!strcmp("push", cmd))
     {
-        return PUSH;
+        int push_value = 0;
+        sscanf(command + n, "%d", &push_value);
+        stack_push(stk, push_value);
+        return 0;
     }
 
-    if (!strcmp("add", cmd))
+    if(!strcmp("add", cmd))
     {
-        return ADD;
+        int first_value = 0, second_value = 0;
+        if (stk->elemAmt < 2)
+        {
+            fprintf(logfile, "\n   ERROR!!!\nCannot add last two elements\nThere are less than 2 elements\n");
+            printf("Cannot add: there are less than 2 elements\n");
+            return 1;
+        }
+        stack_pop(stk, &first_value);
+        stack_pop(stk, &second_value); 
+        stack_push(stk, (first_value + second_value));
     }
-
-    return SYNTAXERROR;
-}
-
-void do_command(int command_num, int n)
-{
-    if(command_num == PUSH)
-    {
-        
-    }
+    return 0;
 }
