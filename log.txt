@@ -4,15 +4,15 @@
  was called:
 file - proc.cpp,
 func - void run_cpu(FILE*),
-line - 24
+line - 25
 
    Stack info:
-element amount = 1
+element amount = 3
 stack capacity = 20
 pointer to data - 0x607000000100
-*[ 1] - 15
- [ 2] - 0
- [ 3] - 0
+*[ 1] - 47
+*[ 2] - 3
+*[ 3] - 0
  [ 4] - 0
  [ 5] - 0
  [ 6] - 0

@@ -1,5 +1,9 @@
+push 10
 push 5
-push 5
-push 5
-add
-add
+mul 5
+push 3
+sub
+push 3
+
+out
+hlt

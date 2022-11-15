@@ -46,13 +46,13 @@ enum ErrorCodes
     BAD_STK_NAME     = 8
 };
 
-enum CommandCodes
+/*enum CommandCodes
 {
     SYNTAXERROR = -1,
     
     PUSH =  1,
     ADD  =  2
-};
+};*/
 
 extern FILE * logfile;
 
@@ -78,14 +78,14 @@ size_t getnum_of_lines(struct my_code * cod);
 
 char * get_next_ptr(char * pr_ptr);
 
-void code_ctor(my_code * code, FILE * stream);
+void   code_ctor(my_code * code, FILE * stream);
 
-void get_indexes(my_code * code);
+void   get_indexes(my_code * code);
 
-void code_dtor(my_code * code);
+void   code_dtor(my_code * code);
 
-void make_n_o(my_code * code);
+void   make_n_o(my_code * code);
 
-int  get_do_command(char * command, my_stack * stk);
+int    get_do_command(char * command, my_stack * stk);
 
 #endif
