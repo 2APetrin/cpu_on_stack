@@ -5,6 +5,8 @@
 #define stack_ctor(stk, size) _stack_ctor((stk), (size), #stk, LOCATION)
 #define stack_check(stk) _stack_check((stk), LOCATION)
 
+#define MIN_CAPACITY 8
+
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
@@ -43,7 +45,16 @@ enum ErrorCodes
     BAD_STK_POINTER  = 1,
     BAD_DATA_POINTER = 2,
     BIG_ELEM_AMT     = 4,
-    BAD_STK_NAME     = 8
+    BAD_STK_NAME     = 8,
+    BAD_CAPACITY     = 16,
+    BAD_STK_FILENAME = 32,
+    BAD_STK_FUNCNAME = 64
+};
+
+enum ResizeCodes
+{
+    SIZEUP   = 1,
+    SIZEDOWN = 0
 };
 
 /*enum CommandCodes
@@ -87,5 +98,7 @@ void   code_dtor(my_code * code);
 void   make_n_o(my_code * code);
 
 int    get_do_command(char * command, my_stack * stk);
+
+int    stack_resize(int size_up, my_stack * stk);
 
 #endif

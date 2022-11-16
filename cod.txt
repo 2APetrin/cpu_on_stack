@@ -1,9 +1,37 @@
-push 10
-push 5
-mul 5
 push 3
-sub
 push 3
-
+push 3
+push 3
+push 3
+push 3
+push 3
+push 3
+push 3
+push 3
+push 3
+push 3
+push 3
+push 3
+push 3
+push 3
+push 3
+push 3
+add
+add
+add
+add
+add
+add
+add
+add
+add
+add
+add
+add
+add
+add
+add
+add
+add
 out
 hlt

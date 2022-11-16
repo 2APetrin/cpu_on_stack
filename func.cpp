@@ -47,6 +47,12 @@ size_t err_check(my_stack * stk)
         sum += BIG_ELEM_AMT;
     if (stk->info.name == NULL)
         sum += BAD_STK_NAME;
+    if (stk->capacity < MIN_CAPACITY)
+        sum += BAD_CAPACITY;
+    if (stk->info.file == NULL)
+        sum += BAD_STK_FILENAME;
+    if (stk->info.func == NULL)
+        sum += BAD_STK_FUNCNAME;
     
     return sum;
 }
@@ -89,6 +95,7 @@ void stack_dump(my_stack * stk, const char * func_name, const char * file_name, 
 void stack_dtor(my_stack * stk)
 {
     stack_check(stk);
+    stack_dump(stk, LOCATION);
 
     for (size_t i = 0; i < stk->capacity; i++)
     {
@@ -116,6 +123,12 @@ void openfile(const char * name)
 void stack_push(my_stack * stk, elem val)
 {
     stack_check(stk);
+    stack_dump(stk, LOCATION);
+
+    if (stk->elemAmt == stk->capacity)
+    {
+        stack_resize(SIZEUP, stk);
+    }
 
     if (stk->elemAmt < stk->capacity)
     {
@@ -127,12 +140,19 @@ void stack_push(my_stack * stk, elem val)
         stack_dump(stk, LOCATION);
     }
 
+    if ((stk->capacity >= (MIN_CAPACITY * 2)) && (stk->elemAmt <= (stk->capacity / 4)))
+    {
+        stack_resize(SIZEDOWN, stk);
+    }
+
     stack_check(stk);
+    stack_dump(stk, LOCATION);
 }
 
 void stack_pop(my_stack * stk, int * var)
 {
     stack_check(stk);
+    stack_dump(stk, LOCATION);
 
     if (stk->elemAmt > 0)
     {
@@ -147,89 +167,35 @@ void stack_pop(my_stack * stk, int * var)
     }
 
     stack_check(stk);
+    stack_dump(stk, LOCATION);
 }
 
-void code_ctor(my_code * code, FILE * stream)
+int stack_resize(int size_up, my_stack * stk)
 {
-    assert(code   != NULL);
-    assert(stream != NULL);
+    stack_check(stk);
+    stack_dump(stk, LOCATION);
+    
+    fprintf(logfile, "\n-----------------------------------------------------------------------\n");
+    fprintf(logfile, "   REALLOCATION!!!\ntype of reallocation - %d\n", size_up);
+    fprintf(logfile, "-----------------------------------------------------------------------\n");
 
-    fseek(stream, 0L, SEEK_END);
-    code->num_of_symbols = (size_t) ftell(stream);
-    rewind(stream);
-
-    code->text = (char *) calloc(code->num_of_symbols + 1, sizeof(char));
-    fread(code->text, sizeof(char), code->num_of_symbols, stream);
-    fclose(stream);
-    code->text[code->num_of_symbols] = 0;
-
-    code->num_of_lines = getnum_of_lines(code);
-    code->strings = (char **) calloc(code->num_of_lines, sizeof(char *));
-    assert(code->strings != NULL);
-
-    get_indexes(code);
-
-    make_n_o(code);
-}
-
-size_t getnum_of_lines(struct my_code * cod)
-{
-    assert(cod != NULL);
-
-    size_t count = 0;
-    for (size_t i = 0; i < cod->num_of_symbols; i++)
+    if (size_up)
     {
-        if (cod->text[i] == '\n')
-            count++;
-    }
-
-    return count;
-}
-
-void get_indexes(my_code * code)
-{
-    assert(code != NULL);
-
-    code->strings[0] = code->text;
-
-    for (size_t i = 1; i < code->num_of_lines; i++)
-    {
-        code->strings[i] = get_next_ptr(code->strings[i - 1]);
-    }
-}
-
-char * get_next_ptr(char * pr_ptr)
-{
-    assert(pr_ptr != NULL);
-
-    int i = 0;
-    while (*(pr_ptr + i) != '\n')
-    {
-        i++;
-    }
-
-    return (pr_ptr + i + 1);
-}
-
-void code_dtor(my_code * code)
-{
-    assert(code != NULL);
-
-    free(code->text);
-    code->text = NULL;
-    free(code->strings);
-    code->strings = NULL;
-    code = NULL;
-}
-
-void make_n_o(my_code * code)
-{
-    for (size_t i = 0; i < code->num_of_symbols + 1; i++)
-    {
-        if(code->text[i] == '\n')
+        stk->data = (elem *) realloc(stk->data, stk->capacity * 2 * sizeof(elem));
+        stk->capacity *=2;
+        for (size_t i = stk->elemAmt; i < stk->capacity; i++)
         {
-            code->text[i] = 0;
+            stk->data[i] = 0;
         }
     }
-}
+    else
+    {
+        stk->data = (elem *) realloc(stk->data, stk->capacity / 2 * sizeof(elem));
+        stk->capacity /= 2;
+    }
 
+    stack_check(stk);
+    stack_dump(stk, LOCATION);
+    
+    return 0;
+}
