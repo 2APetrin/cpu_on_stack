@@ -1,37 +1,13 @@
+push 8
+push 5
 push 3
 push 3
-push 3
-push 3
-push 3
-push 3
-push 3
-push 3
-push 3
-push 3
-push 3
-push 3
-push 3
-push 3
-push 3
-push 3
-push 3
-push 3
+push 5
 add
 add
-add
-add
-add
-add
-add
-add
-add
-add
-add
-add
-add
-add
-add
-add
-add
+mul
+mul
+push 44
+div
 out
 hlt

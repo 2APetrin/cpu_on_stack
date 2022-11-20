@@ -2,16 +2,17 @@
 #define HEADER_H
 
 #define LOCATION __PRETTY_FUNCTION__, __FILE__, __LINE__
-#define stack_ctor(stk, size) _stack_ctor((stk), (size), #stk, LOCATION)
+#define stack_ctor(stk, size) _stack_ctor((stk), (size), var_info {#stk, LOCATION})
 #define stack_check(stk) _stack_check((stk), LOCATION)
-
 #define MIN_CAPACITY 8
+
 
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+
 
 typedef int elem;
 
@@ -67,13 +68,15 @@ enum ResizeCodes
 
 extern FILE * logfile;
 
-void  _stack_ctor(my_stack * stk, size_t cap, const char * p_name, const char * p_func, const char * p_file, int p_line);
+
+void  _stack_ctor(my_stack * stk, size_t cap, struct var_info info);
 
 void  _stack_check(my_stack * stk, const char * func_name, const char * file_name, int lineofcall);
 
 size_t err_check(my_stack * stk);
 
 void   stack_dump(my_stack * stk, const char * func_name, const char * file_name, int lineofcall);
+//написать причину входа в дамп через чар, как доп аргумент
 
 void   stack_dtor(my_stack * stk);
 
@@ -100,5 +103,6 @@ void   make_n_o(my_code * code);
 int    get_do_command(char * command, my_stack * stk);
 
 int    stack_resize(int size_up, my_stack * stk);
+
 
 #endif

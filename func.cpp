@@ -2,22 +2,27 @@
 
 FILE * logfile = NULL;
 
-void _stack_ctor(my_stack * stk, size_t cap, const char * p_name, const char * p_func, const char * p_file, int p_line)
+void _stack_ctor(my_stack * stk, size_t cap, struct var_info info)
 {
     assert(stk    != NULL);
-    assert(p_name != NULL);
-    assert(p_func != NULL);
-    assert(p_file != NULL);
-    assert(p_line  > 0);
+    /*assert(info.name != NULL);
+    assert(info.name != NULL);*/
+
+    assert(info.name != NULL);
+    assert(info.func != NULL);
+    assert(info.file != NULL);
+    assert(info.line  > 0);
 
     stk->capacity  = cap;
     stk->elemAmt   = 0;
     stk->data      = (elem *) calloc(stk->capacity, sizeof(elem));
     
-    stk->info.name = p_name;
-    stk->info.file = p_file;
-    stk->info.line = p_line;
-    stk->info.func = p_func;
+    stk->info = info;
+
+    /*stk->info.name = info.name;
+    stk->info.file = info.file;
+    stk->info.line = info.line;
+    stk->info.func = info.func;*/
 
     stack_check(stk);
 }
@@ -57,7 +62,7 @@ size_t err_check(my_stack * stk)
     return sum;
 }
 
-void stack_dump(my_stack * stk, const char * func_name, const char * file_name, int lineofcall)
+void stack_dump(my_stack * stk, const char * func_name, const char * file_name, int lineofcall)//написать вход или выход из функции
 {
     stack_check(stk);
 
@@ -154,6 +159,11 @@ void stack_pop(my_stack * stk, int * var)
     stack_check(stk);
     stack_dump(stk, LOCATION);
 
+    if (stk->elemAmt == stk->capacity)
+    {
+        stack_resize(SIZEUP, stk);
+    }
+
     if (stk->elemAmt > 0)
     {
         *var = stk->data[stk->elemAmt - 1];
@@ -164,6 +174,11 @@ void stack_pop(my_stack * stk, int * var)
     {
         fprintf(logfile, "\n   WARNING!!!\nThere are no elements in stack data\nAny value was poped\nThere is dump under\n");
         stack_dump(stk, LOCATION);
+    }
+
+    if ((stk->capacity >= (MIN_CAPACITY * 2)) && (stk->elemAmt <= (stk->capacity / 4)))
+    {
+        stack_resize(SIZEDOWN, stk);
     }
 
     stack_check(stk);

@@ -10,12 +10,6 @@ void run_cpu(FILE * stream)
     struct my_code code = {};
     code_ctor(&code, stream);
 
-    /*printf("%s\n",  code.strings[0]);
-    printf("%s\n",  code.strings[1]);
-    printf("%s\n",  code.strings[4]);
-    printf("%lu\n", code.num_of_lines);
-    printf("%lu\n", code.num_of_symbols);*/
-
     for (size_t i = 0; i < code.num_of_lines; i++)
     {
         if( get_do_command(code.strings[i], &stk) )
@@ -61,6 +55,7 @@ size_t getnum_of_lines(struct my_code * cod)
             count++;
     }
 
+    //printf("num of lines - %lu\n", count);
     return count;
 }
 
@@ -113,7 +108,7 @@ void make_n_o(my_code * code)
 
 int get_do_command(char * command, my_stack * stk)
 {
-    char cmd[10];
+    char cmd[10] = "";
     int  n = 0;
     sscanf(command, "%s%n", cmd, &n);
 
