@@ -1,6 +1,4 @@
-#include "header.h"
-
-FILE * logfile = NULL;
+#include "header_cpu.h"
 
 void _stack_ctor(my_stack * stk, size_t cap, struct var_info info)
 {
@@ -62,13 +60,15 @@ size_t err_check(my_stack * stk)
     return sum;
 }
 
-void stack_dump(my_stack * stk, const char * func_name, const char * file_name, int lineofcall)//написать вход или выход из функции
+void stack_dump(my_stack * stk, const char * func_name, const char * file_name, int lineofcall, int entry_reason)//написать вход или выход из функции
 {
     stack_check(stk);
 
     fprintf(logfile, "\n-----------------------------------------------------------------------\n");
 
-    fprintf(logfile, "   DUMP\n was called:\nfile - %s,\nfunc - %s,\nline - %d\n", file_name, func_name, lineofcall);
+    fprintf(logfile, "   DUMP\n was called:\nfile - %s,\nfunc - %s,\nline - %d\n\n", file_name, func_name, lineofcall);
+
+    fprintf(logfile, get_dump_reason(entry_reason));
 
     fprintf(logfile, "\n   Stack info:\n");
     fprintf(logfile, "element amount = %lu\n", stk->elemAmt);
@@ -97,10 +97,22 @@ void stack_dump(my_stack * stk, const char * func_name, const char * file_name, 
     stack_check(stk);
 }
 
+const char * get_dump_reason(int entry_reason)
+{
+    if (entry_reason == DUMP_ENTRY)
+        return "Reason - Entry into function\n";
+    if (entry_reason == DUMP_EXITING)
+        return "Reason - Exiting from function\n";
+    if (entry_reason == DUMP_FOR_ERROR)
+        return "Reason - Dumping from middle of function, because of error\n";
+    
+    return "Unknown reason\n";
+}
+
 void stack_dtor(my_stack * stk)
 {
     stack_check(stk);
-    stack_dump(stk, LOCATION);
+    stack_dump(stk, LOCATION, DUMP_ENTRY);
 
     for (size_t i = 0; i < stk->capacity; i++)
     {
@@ -128,7 +140,7 @@ void openfile(const char * name)
 void stack_push(my_stack * stk, elem val)
 {
     stack_check(stk);
-    stack_dump(stk, LOCATION);
+    stack_dump(stk, LOCATION, DUMP_ENTRY);
 
     if (stk->elemAmt == stk->capacity)
     {
@@ -142,7 +154,7 @@ void stack_push(my_stack * stk, elem val)
     else
     {
         fprintf(logfile, "\n   WARNING!!!\nStack overflow)0)0))0))0)\nLast element (%d) was not added to stack\nThere is dump under\n", val);
-        stack_dump(stk, LOCATION);
+        stack_dump(stk, LOCATION, DUMP_FOR_ERROR);
     }
 
     if ((stk->capacity >= (MIN_CAPACITY * 2)) && (stk->elemAmt <= (stk->capacity / 4)))
@@ -151,13 +163,13 @@ void stack_push(my_stack * stk, elem val)
     }
 
     stack_check(stk);
-    stack_dump(stk, LOCATION);
+    stack_dump(stk, LOCATION, DUMP_EXITING);
 }
 
 void stack_pop(my_stack * stk, int * var)
 {
     stack_check(stk);
-    stack_dump(stk, LOCATION);
+    stack_dump(stk, LOCATION, DUMP_ENTRY);
 
     if (stk->elemAmt == stk->capacity)
     {
@@ -173,7 +185,7 @@ void stack_pop(my_stack * stk, int * var)
     else
     {
         fprintf(logfile, "\n   WARNING!!!\nThere are no elements in stack data\nAny value was poped\nThere is dump under\n");
-        stack_dump(stk, LOCATION);
+        stack_dump(stk, LOCATION, DUMP_FOR_ERROR);
     }
 
     if ((stk->capacity >= (MIN_CAPACITY * 2)) && (stk->elemAmt <= (stk->capacity / 4)))
@@ -182,13 +194,13 @@ void stack_pop(my_stack * stk, int * var)
     }
 
     stack_check(stk);
-    stack_dump(stk, LOCATION);
+    stack_dump(stk, LOCATION, DUMP_EXITING);
 }
 
 int stack_resize(int size_up, my_stack * stk)
 {
     stack_check(stk);
-    stack_dump(stk, LOCATION);
+    stack_dump(stk, LOCATION, DUMP_ENTRY);
     
     fprintf(logfile, "\n-----------------------------------------------------------------------\n");
     fprintf(logfile, "   REALLOCATION!!!\ntype of reallocation - %d\n", size_up);
@@ -210,7 +222,7 @@ int stack_resize(int size_up, my_stack * stk)
     }
 
     stack_check(stk);
-    stack_dump(stk, LOCATION);
+    stack_dump(stk, LOCATION, DUMP_EXITING);
     
     return 0;
 }

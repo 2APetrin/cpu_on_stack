@@ -2,14 +2,16 @@
 -----------------------------------------------------------------------
    DUMP
  was called:
-file - func.cpp,
+file - func_stack.cpp,
 func - void stack_push(my_stack*, elem),
-line - 131
+line - 143
+
+Reason - Entry into function
 
    Stack info:
 element amount = 0
-stack capacity = 8
-pointer to data - 0x603000000040
+stack capacity = 10
+pointer to data - 0x604000000010
  [ 1] - 0
  [ 2] - 0
  [ 3] - 0
@@ -18,1105 +20,29 @@ pointer to data - 0x603000000040
  [ 6] - 0
  [ 7] - 0
  [ 8] - 0
+ [ 9] - 0
+ [10] - 0
 
    Variable info:
 variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
+creation file - main_cpu.cpp
+creation func - int main()
+creation line - 10
 -----------------------------------------------------------------------
 
 -----------------------------------------------------------------------
    DUMP
  was called:
-file - func.cpp,
+file - func_stack.cpp,
 func - void stack_push(my_stack*, elem),
-line - 154
+line - 166
+
+Reason - Exiting from function
 
    Stack info:
 element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 131
-
-   Stack info:
-element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 154
-
-   Stack info:
-element amount = 2
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 131
-
-   Stack info:
-element amount = 2
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 154
-
-   Stack info:
-element amount = 3
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 131
-
-   Stack info:
-element amount = 3
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 154
-
-   Stack info:
-element amount = 4
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
-*[ 4] - 3
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 131
-
-   Stack info:
-element amount = 4
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
-*[ 4] - 3
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 154
-
-   Stack info:
-element amount = 5
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
-*[ 4] - 3
-*[ 5] - 5
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 160
-
-   Stack info:
-element amount = 5
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
-*[ 4] - 3
-*[ 5] - 5
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 185
-
-   Stack info:
-element amount = 4
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
-*[ 4] - 3
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 160
-
-   Stack info:
-element amount = 4
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
-*[ 4] - 3
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 185
-
-   Stack info:
-element amount = 3
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 131
-
-   Stack info:
-element amount = 3
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 154
-
-   Stack info:
-element amount = 4
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
-*[ 4] - 8
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 160
-
-   Stack info:
-element amount = 4
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
-*[ 4] - 8
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 185
-
-   Stack info:
-element amount = 3
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 160
-
-   Stack info:
-element amount = 3
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 3
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 185
-
-   Stack info:
-element amount = 2
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 131
-
-   Stack info:
-element amount = 2
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 154
-
-   Stack info:
-element amount = 3
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 11
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 160
-
-   Stack info:
-element amount = 3
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
-*[ 3] - 11
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 185
-
-   Stack info:
-element amount = 2
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 160
-
-   Stack info:
-element amount = 2
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 5
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 185
-
-   Stack info:
-element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 131
-
-   Stack info:
-element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 154
-
-   Stack info:
-element amount = 2
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 55
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 160
-
-   Stack info:
-element amount = 2
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
-*[ 2] - 55
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 185
-
-   Stack info:
-element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 160
-
-   Stack info:
-element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 8
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 185
-
-   Stack info:
-element amount = 0
-stack capacity = 8
-pointer to data - 0x603000000040
- [ 1] - 0
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 131
-
-   Stack info:
-element amount = 0
-stack capacity = 8
-pointer to data - 0x603000000040
- [ 1] - 0
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 154
-
-   Stack info:
-element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 440
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 131
-
-   Stack info:
-element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 440
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 154
-
-   Stack info:
-element amount = 2
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 440
-*[ 2] - 44
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 160
-
-   Stack info:
-element amount = 2
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 440
-*[ 2] - 44
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 185
-
-   Stack info:
-element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 440
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 160
-
-   Stack info:
-element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 440
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_pop(my_stack*, int*),
-line - 185
-
-   Stack info:
-element amount = 0
-stack capacity = 8
-pointer to data - 0x603000000040
- [ 1] - 0
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 131
-
-   Stack info:
-element amount = 0
-stack capacity = 8
-pointer to data - 0x603000000040
- [ 1] - 0
- [ 2] - 0
- [ 3] - 0
- [ 4] - 0
- [ 5] - 0
- [ 6] - 0
- [ 7] - 0
- [ 8] - 0
-
-   Variable info:
-variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
------------------------------------------------------------------------
-
------------------------------------------------------------------------
-   DUMP
- was called:
-file - func.cpp,
-func - void stack_push(my_stack*, elem),
-line - 154
-
-   Stack info:
-element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
+stack capacity = 10
+pointer to data - 0x604000000010
 *[ 1] - 10
  [ 2] - 0
  [ 3] - 0
@@ -1125,25 +51,29 @@ pointer to data - 0x603000000040
  [ 6] - 0
  [ 7] - 0
  [ 8] - 0
+ [ 9] - 0
+ [10] - 0
 
    Variable info:
 variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
+creation file - main_cpu.cpp
+creation func - int main()
+creation line - 10
 -----------------------------------------------------------------------
 
 -----------------------------------------------------------------------
    DUMP
  was called:
-file - proc.cpp,
-func - void run_cpu(FILE*),
-line - 25
+file - func_stack.cpp,
+func - void stack_pop(my_stack*, int*),
+line - 172
+
+Reason - Entry into function
 
    Stack info:
 element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
+stack capacity = 10
+pointer to data - 0x604000000010
 *[ 1] - 10
  [ 2] - 0
  [ 3] - 0
@@ -1152,26 +82,61 @@ pointer to data - 0x603000000040
  [ 6] - 0
  [ 7] - 0
  [ 8] - 0
+ [ 9] - 0
+ [10] - 0
 
    Variable info:
 variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
+creation file - main_cpu.cpp
+creation func - int main()
+creation line - 10
 -----------------------------------------------------------------------
 
 -----------------------------------------------------------------------
    DUMP
  was called:
-file - func.cpp,
+file - func_stack.cpp,
+func - void stack_pop(my_stack*, int*),
+line - 197
+
+Reason - Exiting from function
+
+   Stack info:
+element amount = 0
+stack capacity = 10
+pointer to data - 0x604000000010
+ [ 1] - 0
+ [ 2] - 0
+ [ 3] - 0
+ [ 4] - 0
+ [ 5] - 0
+ [ 6] - 0
+ [ 7] - 0
+ [ 8] - 0
+ [ 9] - 0
+ [10] - 0
+
+   Variable info:
+variable name - &stk
+creation file - main_cpu.cpp
+creation func - int main()
+creation line - 10
+-----------------------------------------------------------------------
+
+-----------------------------------------------------------------------
+   DUMP
+ was called:
+file - func_stack.cpp,
 func - void stack_dtor(my_stack*),
-line - 103
+line - 115
+
+Reason - Entry into function
 
    Stack info:
-element amount = 1
-stack capacity = 8
-pointer to data - 0x603000000040
-*[ 1] - 10
+element amount = 0
+stack capacity = 10
+pointer to data - 0x604000000010
+ [ 1] - 0
  [ 2] - 0
  [ 3] - 0
  [ 4] - 0
@@ -1179,10 +144,12 @@ pointer to data - 0x603000000040
  [ 6] - 0
  [ 7] - 0
  [ 8] - 0
+ [ 9] - 0
+ [10] - 0
 
    Variable info:
 variable name - &stk
-creation file - proc.cpp
-creation func - void run_cpu(FILE*)
-creation line - 8
+creation file - main_cpu.cpp
+creation func - int main()
+creation line - 10
 -----------------------------------------------------------------------

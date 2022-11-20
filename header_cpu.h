@@ -58,13 +58,13 @@ enum ResizeCodes
     SIZEDOWN = 0
 };
 
-/*enum CommandCodes
+enum DumpEnterReasons
 {
-    SYNTAXERROR = -1,
-    
-    PUSH =  1,
-    ADD  =  2
-};*/
+    DUMP_ENTRY       = 0,
+    DUMP_EXITING     = 1,
+    DUMP_FOR_ERROR   = 2
+};
+
 
 extern FILE * logfile;
 
@@ -75,7 +75,7 @@ void  _stack_check(my_stack * stk, const char * func_name, const char * file_nam
 
 size_t err_check(my_stack * stk);
 
-void   stack_dump(my_stack * stk, const char * func_name, const char * file_name, int lineofcall);
+void   stack_dump(my_stack * stk, const char * func_name, const char * file_name, int lineofcall, int enter_reason);
 //написать причину входа в дамп через чар, как доп аргумент
 
 void   stack_dtor(my_stack * stk);
@@ -104,5 +104,6 @@ int    get_do_command(char * command, my_stack * stk);
 
 int    stack_resize(int size_up, my_stack * stk);
 
+const char * get_dump_reason(int entry_reason);
 
 #endif

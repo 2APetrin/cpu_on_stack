@@ -1,4 +1,4 @@
-#include "header.h"
+#include "header_cpu.h"
 
 void run_cpu(FILE * stream)
 {
