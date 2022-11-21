@@ -66,9 +66,9 @@ void stack_dump(my_stack * stk, const char * func_name, const char * file_name, 
 
     fprintf(logfile, "\n-----------------------------------------------------------------------\n");
 
-    fprintf(logfile, "   DUMP\n was called:\nfile - %s,\nfunc - %s,\nline - %d\n\n", file_name, func_name, lineofcall);
-
+    fprintf(logfile, "   DUMP\n was called:\n\n%s,\n", func_name);
     fprintf(logfile, get_dump_reason(entry_reason));
+    fprintf(logfile, "\nfile - %s,\nline - %d\n", file_name, lineofcall);
 
     fprintf(logfile, "\n   Stack info:\n");
     fprintf(logfile, "element amount = %lu\n", stk->elemAmt);

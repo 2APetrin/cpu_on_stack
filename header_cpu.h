@@ -65,6 +65,17 @@ enum DumpEnterReasons
     DUMP_FOR_ERROR   = 2
 };
 
+enum CmdCodes
+{
+    HLT  = 0,
+    PUSH = 1,
+    ADD  = 2,
+    SUB  = 3,
+    MUL  = 4,
+    DIV  = 5,
+    POP  = 6,
+    OUT  = 7
+};
 
 extern FILE * logfile;
 
@@ -76,7 +87,7 @@ void  _stack_check(my_stack * stk, const char * func_name, const char * file_nam
 size_t err_check(my_stack * stk);
 
 void   stack_dump(my_stack * stk, const char * func_name, const char * file_name, int lineofcall, int enter_reason);
-//написать причину входа в дамп через чар, как доп аргумент
+//написать причину входа в дамп через чар, как доп аргумент **sdelano**
 
 void   stack_dtor(my_stack * stk);
 
@@ -85,8 +96,6 @@ void   openfile(const char * name);
 void   stack_push(my_stack * stk, elem val);
 
 void   stack_pop(my_stack * stk, int * var);
-
-void   run_cpu(FILE * code);
 
 size_t getnum_of_lines(struct my_code * cod);
 
@@ -105,5 +114,11 @@ int    get_do_command(char * command, my_stack * stk);
 int    stack_resize(int size_up, my_stack * stk);
 
 const char * get_dump_reason(int entry_reason);
+
+FILE * open_inputfile(const char * filename);
+
+int run_cpu(FILE * stream);
+
+int do_cmd(int cmd, FILE * stream, my_stack * stk, size_t line_n);
 
 #endif

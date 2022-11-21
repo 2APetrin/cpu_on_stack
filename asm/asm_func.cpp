@@ -192,7 +192,7 @@ size_t getnum_of_lines(struct my_code * cod)
             count++;
     }
 
-    //printf("\nnum of lines - %lu\n\n", count);
+    printf("\nnum of lines - %lu\n\n", count);
     return count;
 }
 
@@ -213,7 +213,7 @@ char * get_next_ptr(char * pr_ptr)
     assert(pr_ptr != NULL);
 
     int i = 0;
-    while (*(pr_ptr + i) != '\n')
+    while (*(pr_ptr + i) != '\n' && *(pr_ptr + i) != 0)
     {
         i++;
     }

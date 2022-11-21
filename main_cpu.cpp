@@ -6,12 +6,8 @@ int main(void)
 {
     openfile("log.txt");
 
-    my_stack stk = {};
-    stack_ctor(&stk, 10);
-    stack_push(&stk, 10);
-    int i = 0;
-    stack_pop (&stk, &i);
-    stack_dtor(&stk);
+    FILE * codefile = open_inputfile("/home/tony/Code/my_stack/asm/test.code");
+    run_cpu(codefile);
 
     fclose(logfile);
     return 0;
