@@ -1,11 +1,8 @@
-#include "header_cpu.h"
+#include "cpu_header.h"
 
-void _stack_ctor(my_stack * stk, size_t cap, struct var_info info)
+int _stack_ctor(my_stack * stk, size_t cap, struct var_info info)
 {
-    assert(stk    != NULL);
-    /*assert(info.name != NULL);
-    assert(info.name != NULL);*/
-
+    assert(stk       != NULL);
     assert(info.name != NULL);
     assert(info.func != NULL);
     assert(info.file != NULL);
@@ -15,14 +12,10 @@ void _stack_ctor(my_stack * stk, size_t cap, struct var_info info)
     stk->elemAmt   = 0;
     stk->data      = (elem *) calloc(stk->capacity, sizeof(elem));
     
-    stk->info = info;
-
-    /*stk->info.name = info.name;
-    stk->info.file = info.file;
-    stk->info.line = info.line;
-    stk->info.func = info.func;*/
+    stk->stack_info = info;
 
     stack_check(stk);
+    return 0;
 }
 
 void _stack_check(my_stack * stk, const char * func_name, const char * file_name, int lineofcall)
@@ -48,19 +41,19 @@ size_t err_check(my_stack * stk)
         sum += BAD_DATA_POINTER; 
     if (stk->elemAmt > stk->capacity)
         sum += BIG_ELEM_AMT;
-    if (stk->info.name == NULL)
+    if (stk->stack_info.name == NULL)
         sum += BAD_STK_NAME;
     if (stk->capacity < MIN_CAPACITY)
         sum += BAD_CAPACITY;
-    if (stk->info.file == NULL)
+    if (stk->stack_info.file == NULL)
         sum += BAD_STK_FILENAME;
-    if (stk->info.func == NULL)
+    if (stk->stack_info.func == NULL)
         sum += BAD_STK_FUNCNAME;
     
     return sum;
 }
 
-void stack_dump(my_stack * stk, const char * func_name, const char * file_name, int lineofcall, int entry_reason)//написать вход или выход из функции
+void stack_dump(my_stack * stk, const char * func_name, const char * file_name, int lineofcall, int entry_reason)
 {
     stack_check(stk);
 
@@ -87,10 +80,10 @@ void stack_dump(my_stack * stk, const char * func_name, const char * file_name, 
     }
 
     fprintf(logfile, "\n   Variable info:\n");
-    fprintf(logfile, "variable name - %s\n", stk->info.name);
-    fprintf(logfile, "creation file - %s\n", stk->info.file);
-    fprintf(logfile, "creation func - %s\n", stk->info.func);
-    fprintf(logfile, "creation line - %d\n", stk->info.line);
+    fprintf(logfile, "variable name - %s\n", stk->stack_info.name);
+    fprintf(logfile, "creation file - %s\n", stk->stack_info.file);
+    fprintf(logfile, "creation func - %s\n", stk->stack_info.func);
+    fprintf(logfile, "creation line - %d\n", stk->stack_info.line);
 
     fprintf(logfile, "-----------------------------------------------------------------------\n");
 
@@ -109,7 +102,7 @@ const char * get_dump_reason(int entry_reason)
     return "Unknown reason\n";
 }
 
-void stack_dtor(my_stack * stk)
+int stack_dtor(my_stack * stk)
 {
     stack_check(stk);
     stack_dump(stk, LOCATION, DUMP_ENTRY);
@@ -124,17 +117,8 @@ void stack_dtor(my_stack * stk)
     stk->capacity = 0;
     stk->elemAmt  = 0;
     stk = NULL;
-}
 
-void openfile(const char * name)
-{
-    if ((logfile = fopen(name, "w")) == NULL)
-    {
-        fprintf(logfile, "Cannot open logfile\n");
-        fclose(logfile);
-
-        abort();
-    }
+    return 0;
 }
 
 void stack_push(my_stack * stk, elem val)
@@ -147,15 +131,7 @@ void stack_push(my_stack * stk, elem val)
         stack_resize(SIZEUP, stk);
     }
 
-    if (stk->elemAmt < stk->capacity)
-    {
-        stk->data[stk->elemAmt++] = val;
-    }
-    else
-    {
-        fprintf(logfile, "\n   WARNING!!!\nStack overflow)0)0))0))0)\nLast element (%d) was not added to stack\nThere is dump under\n", val);
-        stack_dump(stk, LOCATION, DUMP_FOR_ERROR);
-    }
+    stk->data[stk->elemAmt++] = val;
 
     if ((stk->capacity >= (MIN_CAPACITY * 2)) && (stk->elemAmt <= (stk->capacity / 4)))
     {
@@ -170,11 +146,6 @@ void stack_pop(my_stack * stk, int * var)
 {
     stack_check(stk);
     stack_dump(stk, LOCATION, DUMP_ENTRY);
-
-    if (stk->elemAmt == stk->capacity)
-    {
-        stack_resize(SIZEUP, stk);
-    }
 
     if (stk->elemAmt > 0)
     {
@@ -197,16 +168,16 @@ void stack_pop(my_stack * stk, int * var)
     stack_dump(stk, LOCATION, DUMP_EXITING);
 }
 
-int stack_resize(int size_up, my_stack * stk)
+int stack_resize(int size_cmd, my_stack * stk)
 {
     stack_check(stk);
     stack_dump(stk, LOCATION, DUMP_ENTRY);
     
     fprintf(logfile, "\n-----------------------------------------------------------------------\n");
-    fprintf(logfile, "   REALLOCATION!!!\ntype of reallocation - %d\n", size_up);
+    fprintf(logfile, "   REALLOCATION!!!\ntype of reallocation - %d\n", size_cmd);
     fprintf(logfile, "-----------------------------------------------------------------------\n");
 
-    if (size_up)
+    if (size_cmd)
     {
         stk->data = (elem *) realloc(stk->data, stk->capacity * 2 * sizeof(elem));
         stk->capacity *=2;

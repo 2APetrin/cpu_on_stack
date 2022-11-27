@@ -1,12 +1,20 @@
-#ifndef HEADER_H
-#define HEADER_H
+#pragma once
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <math.h>
 #include <assert.h>
+#include <stdlib.h>
+#include <string.h>
 #include <ctype.h>
-#include <cstring>
 
+typedef int elem;
+
+struct token
+{
+    char * text;
+    int    val;
+    int    type;
+};
 
 struct my_code
 {
@@ -18,46 +26,37 @@ struct my_code
 
 enum CmdCodes
 {
-    NTHG = 0,
-    HLT  = 0,
-    PUSH = 1,
-    ADD  = 2,
-    SUB  = 3,
-    MUL  = 4,
-    DIV  = 5,
-    POP  = 6,
-    OUT  = 7
+    ERROR = -1,
+    HLT   = 0,
+    PUSH  = 1,
+    ADD   = 2,
+    SUB   = 3,
+    MUL   = 4,
+    DIV   = 5,
+    POP   = 6,
+    OUT   = 7,
+    NUM   = 3802
 };
 
 
-extern FILE * logfile;
+int    run_asm(FILE * in_stream, FILE * out_stream);
 
+size_t getnum_of_cmds(char * prog_text, size_t num);
 
-int    open_logfile(void);
+int    open_logfile(const char * filename);
 
-FILE * open_inputfile (const char * filename);
+FILE * open_inputfile(const char * filename);
+
 FILE * open_outputfile(const char * filename);
 
-int    assembler(FILE * in, FILE * out);
+char * getptr_toks_zero(char * prog_text);
 
-size_t getnum_of_lines(struct my_code * cod);
+int tok_info_init(struct token * tkn);
 
-char * get_next_ptr(char * pr_ptr);
+int check_tkn_for_num(char * str);
 
-void   code_ctor(my_code * code, FILE * stream);
+int check_tkn_for_string(char * str);
 
-void   get_indexes(my_code * code);
+int get_type_cmd(char * str);
 
-void   code_dtor(my_code * code);
-
-void   make_n_o(my_code * code);
-
-int    print_code(char * cmd_ptr, FILE * out, size_t line_n);
-
-int    write_code(my_code * code, FILE * out);
-
-int    is_blank(char * ptr);
-
-void cmd_verify(char * cmd_ptr, size_t line_n, int cmd_type);
-
-#endif
+int check_code(struct token * array, size_t num_of_cmds);
