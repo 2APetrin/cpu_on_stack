@@ -42,6 +42,19 @@ int execute_code(int * array, size_t len, my_stack * stk)
     {
         if (array[i] == HLT)
         {
+            if (stk->elemAmt != 0)
+            {
+                int k = 0;
+                size_t reps = stk->elemAmt; 
+                printf("Stack isn't empty. You've forgotten about %lu elements:\n", reps);
+
+                for (size_t t = 0; t < reps; t++)
+                {
+                    stack_pop(stk, &k);
+                    printf("%d\n", k);
+                }
+            }
+
             return 0;
         }
 

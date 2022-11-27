@@ -6,7 +6,7 @@ int main(void)
 {
     open_logfile("log.txt");
 
-    FILE * codefile = open_inputfile("/home/tony/Code/my_stack_rewrite/asm/test.code");
+    FILE * codefile = open_inputfile("/home/tony/Code/my_stack/asm/test.code");
     run_cpu(codefile);
 
     fclose(logfile);
