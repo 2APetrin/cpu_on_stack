@@ -1,9 +1,8 @@
 push 5
-push 4 
+push 7
 add
-push 5
+push 3
 mul
-push 5
-div
 out
+mul
 hlt
