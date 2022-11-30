@@ -67,3 +67,5 @@ int    get_tokens(token * toks, size_t num_of_cmds, char * prog_text);
 char * skip_spaces(char * start_ptr, size_t * line);
 
 char * get_end_of_word(char * word_ptr, size_t * p_line);
+
+int iscodesymbol(char c_letter);

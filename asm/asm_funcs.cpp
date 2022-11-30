@@ -60,7 +60,12 @@ int run_asm(FILE * in_stream, FILE * out_stream)
             printf("%d\n", out_array[i]);
         }*/
 
+        printf("Compilation OK\n");
         free(out_array);
+    }
+    else
+    {
+        printf("Compilation error\n");
     }
 
     fclose(out_stream);
@@ -158,7 +163,7 @@ int check_code(struct token * array, size_t num_of_cmds)
 
         if (array[i-1].type == HLT)
         {
-            printf("Error: commands after hlt\n");
+            printf("Error: commands after hlt: %s\n", array[i].text);
             return_flag = 1;
         }
 
@@ -211,6 +216,7 @@ int tok_info_init(struct token * tkn)
     }
 
     printf("Error: syntax error in line %lu: %s\n",tkn->line, tkn->text);
+    tkn->type = ERROR;
     return 1;
 }
 
@@ -218,11 +224,17 @@ int check_tkn_for_num(char * str)
 {
     assert(str);
 
+    int i = 0;
     //printf("enter check_tkn_for_num. str = %s\n", str);
-    for (int i = 0; str[i]; i++)
+    for (; str[i]; i++)
     {
-        if (!isdigit(str[i]))
+        if (!(isdigit(str[i]) || str[i] == '-'))
             return 0;
+    }
+
+    if (str[0] == '-' && i == 1)
+    {
+        return 0;
     }
 
     return 1;
@@ -298,7 +310,7 @@ char * getptr_toks_zero(char * prog_text)
     assert(prog_text);
 
     int i = 0;
-    while (!isalpha(prog_text[i]))
+    while (!iscodesymbol(prog_text[i]))
         i++;
     
     return prog_text + i;
@@ -309,14 +321,19 @@ size_t getnum_of_cmds(char * prog_text, size_t num)
     assert(prog_text);
 
     size_t i = 0;
-    if (isalnum(prog_text[0])) 
+    if (iscodesymbol(prog_text[0])) 
         i++;
 
     for (size_t k = 1; k < num; k++)
     {
-        if (isspace(prog_text[k - 1]) && isalnum(prog_text[k])) 
+        if (isspace(prog_text[k - 1]) && iscodesymbol(prog_text[k])) 
             i++;
     }
 
     return i;
+}
+
+int iscodesymbol(char c_letter)
+{
+    return (isalnum(c_letter) || (c_letter == '-'));
 }
