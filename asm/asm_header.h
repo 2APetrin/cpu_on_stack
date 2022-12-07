@@ -9,6 +9,12 @@
 
 typedef int elem;
 
+enum Labels
+{
+    FREE          = -1,
+    NUM_OF_LABELS = 10
+};
+
 struct token
 {
     char * text;
@@ -25,6 +31,16 @@ struct my_code
     size_t  num_of_lines;
 };
 
+struct asm_info_components
+{
+    char         * prog_text;
+    size_t         num_of_letters;
+    size_t         num_of_cmds;
+    struct token * toks_array;
+    int          * labels_array;
+    elem         * out_array;
+};
+
 enum CmdCodes
 {
     ERROR = -1,
@@ -34,10 +50,17 @@ enum CmdCodes
     SUB   = 3,
     MUL   = 4,
     DIV   = 5,
-    POP   = 6,
-    OUT   = 7,
+    OUT   = 6,
+    POPR  = 7, // изменить на pop ax
+    PUSHR = 8,
+    JUMP  = 9,
+    LABEL = 1000,
+    AX    = 1001,
+    BX    = 1002,
     NUM   = 3802
 };
+
+
 
 
 int    run_asm(FILE * in_stream, FILE * out_stream);
@@ -68,4 +91,14 @@ char * skip_spaces(char * start_ptr, size_t * line);
 
 char * get_end_of_word(char * word_ptr, size_t * p_line);
 
-int iscodesymbol(char c_letter);
+int    put_null_to_end_of_last_token(char * str_ptr);
+
+int    asm_ctor(FILE * in_stream, asm_info_components * ass);
+
+int    asm_info_init(asm_info_components * ass, char * flag);
+
+int    check_tkn_for_label(char * str);
+
+int    asm_dtor(struct asm_info_components * ass);
+
+int    tok_info_init(struct token * tkn, struct asm_info_components * ass, size_t itteration);

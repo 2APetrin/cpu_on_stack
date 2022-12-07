@@ -4,31 +4,43 @@ int run_cpu(FILE * in_stream)
 {
     assert(in_stream);
 
-    struct my_stack stk = {};
-    stack_ctor(&stk, MIN_CAPACITY);
+    /*struct my_stack stk = {};
+    stack_ctor(&stk, MIN_CAPACITY);*/
+    struct cpu_s cpu = {};
+    cpu_ctor(&cpu);
 
     size_t num_of_symbols = get_num_of_symbols(in_stream);
     //printf("Num of bytes = %lu\n", num_of_symbols);
     size_t array_length = num_of_symbols / sizeof(int);
 
-    int * in_array = (int *) calloc (array_length, sizeof(int));
+    cpu.executable_code_array = (int *) calloc (array_length, sizeof(int));
 
-    fread(in_array, sizeof(int), num_of_symbols, in_stream);
+    fread(cpu.executable_code_array, sizeof(int), num_of_symbols, in_stream);
     fclose(in_stream);
 
-    /*for (size_t i = 0; i < array_length; i++)
+    for (size_t i = 0; i < array_length; i++)
     {
-        printf("%d\n", in_array[i]);
-    }*/
+        printf("%d\n", cpu.executable_code_array[i]);
+    }
 
-    if (execute_code(in_array, array_length, &stk))
+    if (execute_code(cpu.executable_code_array, array_length, &cpu.cpu_stack))
     {
         printf("Error: unknown command\n");
         abort();
     }
 
-    free(in_array);
-    stack_dtor(&stk);   
+    free(cpu.executable_code_array);
+    stack_dtor(&cpu.cpu_stack);
+
+    return 0;
+}
+
+int cpu_ctor(struct cpu_s * proc)
+{
+    assert(proc);
+    
+    //proc->cpu_stack = (struct my_stack *) calloc (1, sizeof(my_stack));
+    stack_ctor(&proc->cpu_stack, MIN_CAPACITY);
 
     return 0;
 }
@@ -40,6 +52,8 @@ int execute_code(int * array, size_t len, my_stack * stk)
 
     for (size_t i = 0; i < len; i++)
     {
+        //printf("loop exe code entered\n");
+
         if (array[i] == HLT)
         {
             if (stk->elemAmt != 0)
@@ -128,7 +142,7 @@ int execute_code(int * array, size_t len, my_stack * stk)
             continue;
         }
 
-        if (array[i] == POP)
+        /*if (array[i] == POP)
         {
             if (stk->elemAmt < 1)
             {
@@ -140,6 +154,12 @@ int execute_code(int * array, size_t len, my_stack * stk)
             stack_pop (stk, &val1);
 
             continue;
+        }*/ //сделать из этого попр
+
+        if (array[i] == JUMP)
+        {
+            i = (size_t) (array[i+1] - 1);
+            continue;
         }
 
         if (array[i] == OUT)
@@ -147,7 +167,7 @@ int execute_code(int * array, size_t len, my_stack * stk)
             if (stk->elemAmt < 1)
             {
                 printf("Error: cannot OUT elements, there is less than one element in stack\n");
-                abort();
+                abort(); // заменить на ретёрн / заменить на свой аборт
             }
 
             int val1 = 0;

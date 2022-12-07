@@ -1,7 +1,5 @@
-push 5
-push 7
-add
-push -3
-mul
+jump :1
+push 123
 out
-hlt
+:1
+hlt    

@@ -5,63 +5,57 @@ int run_asm(FILE * in_stream, FILE * out_stream)
     assert(in_stream);
     assert(out_stream);
 
-    fseek(in_stream, 0L, SEEK_END);
-    size_t num_of_letters = (size_t) ftell(in_stream);
-    rewind(in_stream);
-
-    char * prog_text = (char *) calloc(num_of_letters + 1, sizeof(char));
-    fread(prog_text, sizeof(char), num_of_letters, in_stream);
-    fclose(in_stream);
-
-    size_t num_of_cmds = getnum_of_cmds(prog_text, num_of_letters);
-    //printf("n of cmds = %lu\n", num_of_cmds);
-    struct token * toks = (struct token *) calloc (num_of_cmds, sizeof(struct token));
-
-    get_tokens(toks, num_of_cmds, prog_text);
-
-    /*for (size_t i = 0; i < num_of_cmds; i++)
-    {
-        printf("%s, line - %lu\n", toks[i].text, toks[i].line); 
-    }*/
+    struct asm_info_components ass = {};
+    asm_ctor(in_stream, &ass);
 
     char flag = 1;
 
-    for (size_t i = 0; i < num_of_cmds; i++)
-    {
-        if (tok_info_init(&toks[i]))
-        {
-            flag = 0;
-        }
-    }
+    asm_info_init(&ass, &flag);
+    asm_info_init(&ass, &flag); // как сделать обработку ошибок, когда мы ставим две одинаковые метки?
 
-    if (check_code(toks, num_of_cmds))
+    if (check_code(ass.toks_array, ass.num_of_cmds)) //доработать чек код
+    {
         flag = 0;
+    }
 
     if (flag)
     {
-        elem * out_array = (elem *) calloc (num_of_cmds, sizeof(elem));
+        ass.out_array = (elem *) calloc (ass.num_of_cmds, sizeof(elem));
 
-        for (size_t i = 0; i < num_of_cmds; i++)
+        size_t minus_count = 0;
+        for (size_t i = 0; i < ass.num_of_cmds; i++)
         {
-            if (toks[i].type != NUM)
+            if (ass.toks_array[i].type == NUM)
             {
-                out_array[i] = toks[i].type;
+                ass.out_array[i - minus_count] = ass.toks_array[i].val;
             }
-            else
+            if (ass.toks_array[i].type != NUM && ass.toks_array[i].type != LABEL)
             {
-                out_array[i] = toks[i].val;
+                ass.out_array[i - minus_count] = ass.toks_array[i].type;
+            }
+            if (ass.toks_array[i].type == LABEL)
+            {
+                if (i == 0 || ass.toks_array[i-1].type != JUMP)
+                {
+                    minus_count++;
+                    continue;
+                }
+                else if (ass.toks_array[i-1].type == JUMP)
+                {
+                    ass.out_array[i - minus_count] = ass.toks_array[i].val;
+                }
             }
         }
 
-        fwrite(out_array, sizeof(int), num_of_cmds, out_stream);
+        fwrite(ass.out_array, sizeof(int), ass.num_of_cmds, out_stream);
 
-        /*for (size_t i = 0; i < num_of_cmds; i++)
+        for (size_t i = 0; i < ass.num_of_cmds; i++)
         {
-            printf("%d\n", out_array[i]);
-        }*/
+            printf("%d\n", ass.out_array[i]);
+        }
 
         printf("Compilation OK\n");
-        free(out_array);
+        free(ass.out_array);
     }
     else
     {
@@ -69,8 +63,123 @@ int run_asm(FILE * in_stream, FILE * out_stream)
     }
 
     fclose(out_stream);
-    free(prog_text);
-    free(toks);
+    free(ass.prog_text);
+    free(ass.toks_array);
+
+    asm_dtor(&ass);
+
+    return 0;
+}
+
+int asm_dtor(struct asm_info_components * ass)
+{
+    assert(ass);
+
+    free(ass->labels_array);
+
+    ass->num_of_cmds = 0;
+    ass->num_of_letters = 0;
+    ass->prog_text = NULL;
+    
+    return 0;
+}
+
+int asm_info_init(asm_info_components * ass, char * flag)
+{
+    assert(ass);
+
+    for (size_t i = 0; i < ass->num_of_cmds; i++)
+    {
+        if (tok_info_init(&ass->toks_array[i], ass, i))
+        {
+            *flag = 0;
+        }
+    }
+
+    return 0;
+}
+
+int tok_info_init(struct token * tkn, struct asm_info_components * ass, size_t itteration)
+{
+    assert(tkn);
+    //printf("\nEnter the tok_info_init\n");
+
+    if (check_tkn_for_string(tkn->text))
+    {
+        tkn->type = get_type_cmd(tkn->text);
+        //printf("%s cmd_type - %d\n", tkn->text, tkn->type);
+
+        if (tkn->type == ERROR)
+        {
+            printf("Error: unknown command in line %lu: %s\n", tkn->line, tkn->text);
+            return 1;
+        }
+
+        return 0;
+    }
+
+    if (check_tkn_for_num(tkn->text))
+    {
+        sscanf(tkn->text, "%d", &tkn->val);
+        tkn->type = NUM;
+        //printf("num = %d\n", tkn->val);
+
+        return 0;
+    }
+
+    if (check_tkn_for_label(tkn->text))
+    {
+        tkn->type = LABEL;
+        sscanf(tkn->text + 1, "%d", &tkn->val);
+
+        if (itteration == 0 || ass->toks_array[itteration - 1].type != JUMP)
+        {
+            ass->labels_array[tkn->val] = (int) itteration;
+        }
+        else if (ass->toks_array[itteration - 1].type == JUMP)
+        {
+            if (ass->labels_array[tkn->val] != FREE)
+            {
+                tkn->val = ass->labels_array[tkn->val];
+            }
+        }
+
+        return 0;
+    }
+
+    printf("Error: syntax error in line %lu: %s\n",tkn->line, tkn->text);
+    tkn->type = ERROR;
+    return 1;
+}
+
+int asm_ctor(FILE * in_stream, asm_info_components * ass)
+{
+    assert(in_stream);
+    assert(ass);
+
+    fseek(in_stream, 0L, SEEK_END);
+    ass->num_of_letters = (size_t) ftell(in_stream);
+    rewind(in_stream);
+
+    ass->prog_text   = (char *) calloc(ass->num_of_letters + 1, sizeof(char));
+    fread(ass->prog_text, sizeof(char), ass->num_of_letters, in_stream);
+    fclose(in_stream);
+
+    ass->num_of_cmds = getnum_of_cmds(ass->prog_text, ass->num_of_letters);
+    ass->toks_array  = (struct token *) calloc (ass->num_of_cmds, sizeof(struct token));
+
+    get_tokens(ass->toks_array, ass->num_of_cmds, ass->prog_text);
+
+    /*for (size_t i = 0; i < ass->num_of_cmds; i++)
+    {
+        printf("%s, line - %lu\n", ass->toks_array[i].text, ass->toks_array[i].line); 
+    }*/
+
+    ass->labels_array = (int *) calloc (10, sizeof(int));
+    for (int i = 0; i < NUM_OF_LABELS; i++)
+    {
+        ass->labels_array[i] = FREE;
+    }
 
     return 0;
 }
@@ -91,6 +200,17 @@ int get_tokens(token * toks, size_t num_of_cmds, char * prog_text)
         if (i < num_of_cmds - 1)
             end_of_word  = get_end_of_word(toks[i].text, &line);
     }
+
+    put_null_to_end_of_last_token(toks[num_of_cmds - 1].text);
+
+    return 0;
+}
+
+int put_null_to_end_of_last_token(char * str_ptr)
+{
+    int i = 0;
+    while (isgraph(str_ptr[i])) i++;
+    str_ptr[i] = 0;
 
     return 0;
 }
@@ -126,7 +246,7 @@ char * get_end_of_word(char * word_ptr, size_t * p_line)
     if (word_ptr[i] == '\n')
     {
         *p_line += 1;
-        //printf("slashn found\n"); 
+        //printf("slashn found\n"); check_code
     }
 
     word_ptr[i] = '\0';
@@ -134,7 +254,7 @@ char * get_end_of_word(char * word_ptr, size_t * p_line)
     return (word_ptr + i + 1);
 }
 
-int check_code(struct token * array, size_t num_of_cmds)
+int check_code(struct token * array, size_t num_of_cmds) // переименовать array
 {
     assert(array);
 
@@ -173,7 +293,7 @@ int check_code(struct token * array, size_t num_of_cmds)
         }
     }
 
-    if (array[0].type == NUM)
+    if (array[0].type == NUM) // убрать ошибку с hlt, он может использоваться в неск. частях кода
     {
         printf("Error: number can't be first command in line: %lu\n", array[0].line);
         return_flag = 1;
@@ -188,36 +308,27 @@ int check_code(struct token * array, size_t num_of_cmds)
     return return_flag;
 }
 
-int tok_info_init(struct token * tkn)
+int check_tkn_for_label(char * str)
 {
-    assert(tkn);
-    //printf("\nEnter the tok_info_init\n");
+    assert(str);
 
-    if (check_tkn_for_string(tkn->text))
+    if (str[0] == ':')
     {
-        tkn->type = get_type_cmd(tkn->text);
-        //printf("%s cmd_type - %d\n", tkn->text, tkn->type);
+        int i = 1;
 
-        if (tkn->type == ERROR)
+        for (; str[i]; i++)
         {
-            printf("Error: unknown command in line %lu: %s\n", tkn->line, tkn->text);
-            return 1;
+            if (!(isdigit(str[i])))
+                return 0;
         }
 
-        return 0;
+        if (i == 1)
+            return 0;
+        
+        return 1;
     }
 
-    if (check_tkn_for_num(tkn->text))
-    {
-        sscanf(tkn->text, "%d", &tkn->val);
-        tkn->type = NUM;
-        //printf("num = %d\n", tkn->val);
-        return 0;
-    }
-
-    printf("Error: syntax error in line %lu: %s\n",tkn->line, tkn->text);
-    tkn->type = ERROR;
-    return 1;
+    return 0;
 }
 
 int check_tkn_for_num(char * str)
@@ -228,7 +339,7 @@ int check_tkn_for_num(char * str)
     //printf("enter check_tkn_for_num. str = %s\n", str);
     for (; str[i]; i++)
     {
-        if (!(isdigit(str[i]) || str[i] == '-'))
+        if (!(isdigit(str[i]) || str[i] == '-' || str[i] == '+'))
             return 0;
     }
 
@@ -292,14 +403,24 @@ int get_type_cmd(char * str)
         return DIV;
     }
 
-    if (!strcmp(str, "pop"))
+    if (!strcmp(str, "popr"))
     {
-        return POP;
+        return POPR;
     }
 
     if (!strcmp(str, "out"))
     {
         return OUT;
+    }
+
+    if (!strcmp(str, "jump"))
+    {
+        return JUMP;
+    }
+
+    if (!strcmp(str, "pushr"))
+    {
+        return PUSHR;
     }
 
     return ERROR;
@@ -310,7 +431,7 @@ char * getptr_toks_zero(char * prog_text)
     assert(prog_text);
 
     int i = 0;
-    while (!iscodesymbol(prog_text[i]))
+    while (!isgraph(prog_text[i]))
         i++;
     
     return prog_text + i;
@@ -321,19 +442,14 @@ size_t getnum_of_cmds(char * prog_text, size_t num)
     assert(prog_text);
 
     size_t i = 0;
-    if (iscodesymbol(prog_text[0])) 
+    if (isgraph(prog_text[0])) 
         i++;
 
     for (size_t k = 1; k < num; k++)
     {
-        if (isspace(prog_text[k - 1]) && iscodesymbol(prog_text[k])) 
+        if (isspace(prog_text[k - 1]) && isgraph(prog_text[k])) 
             i++;
     }
 
     return i;
-}
-
-int iscodesymbol(char c_letter)
-{
-    return (isalnum(c_letter) || (c_letter == '-'));
 }
