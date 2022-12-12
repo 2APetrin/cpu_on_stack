@@ -1,8 +1,9 @@
 #include "asm_header.h"
+#include "filework_header.h"
 
 FILE * open_inputfile(const char * filename)
 {
-    FILE * return_ptr = fopen(filename, "r");
+    FILE * return_ptr = fopen(filename, "rb");
 
     if (return_ptr == NULL)
     {

@@ -26,7 +26,7 @@ int run_cpu(FILE * in_stream)
     if (execute_code(cpu.executable_code_array, array_length, &cpu.cpu_stack))
     {
         printf("Error: unknown command\n");
-        abort();
+        return 1;
     }
 
     free(cpu.executable_code_array);

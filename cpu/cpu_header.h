@@ -12,7 +12,7 @@ struct cpu_s
 {
     struct my_stack   cpu_stack;
     elem            * executable_code_array;
-    elem            * cpu_ram;
+    //elem            * cpu_ram; // зачем нужна оперативная память?
     elem              register_ax;
     elem              register_bx;
     elem              register_cx;
@@ -52,6 +52,8 @@ enum CmdCodes
     LABEL = 1000,
     AX    = 1001,
     BX    = 1002,
+    CX    = 1003,
+    DX    = 1004,
     NUM   = 3802
 };
 
