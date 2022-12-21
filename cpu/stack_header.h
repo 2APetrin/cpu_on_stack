@@ -32,6 +32,23 @@ struct my_stack
     struct var_info stack_info;
 };
 
+enum err_stk_codes
+{
+    BAD_STK_POINTER  = 1,
+    BAD_DATA_POINTER = 2,
+    BIG_ELEM_AMT     = 4,
+    BAD_STK_NAME     = 8,
+    BAD_CAPACITY     = 16,
+    BAD_STK_FILENAME = 32,
+    BAD_STK_FUNCNAME = 64
+};
+
+enum ResizeCodes
+{
+    SIZEUP   = 1,
+    SIZEDOWN = 0
+};
+
 enum DumpEnterReasons
 {
     DUMP_ENTRY       = 0,

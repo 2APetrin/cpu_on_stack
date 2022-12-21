@@ -66,7 +66,8 @@ enum cmd_codes
     JMP_A  = 15,
     JMP_AE = 16,
     JMP_E  = 17,
-    JMP_NE = 18
+    JMP_NE = 18,
+    MOD    = 19
 };
 
 enum register_number
@@ -78,38 +79,38 @@ enum register_number
 };
 
 
-void run_asm(FILE * in_stream, FILE * out_stream);
+void   run_asm(FILE * in_stream, FILE * out_stream);
 
-int asm_ctor(FILE * in_stream, asm_data * asm_data);
+int    asm_ctor(FILE * in_stream, asm_data * asm_data);
 
 size_t get_num_of_tokens(char * prog_text, size_t num_of_toks);
 
-int get_tokens(token * toks, size_t num_of_toks, char * prog_text);
+int    get_tokens(token * toks, size_t num_of_toks, char * prog_text);
 
 char * skip_spaces(char * start_ptr, size_t * line_ptr);
 
 char * get_end_of_word(char * word_ptr, size_t * p_line);
 
-int put_null_to_end_of_last_token(char * str_ptr);
+int    put_null_to_end_of_last_token(char * str_ptr);
 
-int asm_toks_init(asm_data * asm_data);
+int    asm_toks_init(asm_data * asm_data);
 
-int tok_info_init(token * tok, asm_data * asm_data, size_t itteration, int * minus_count);
+int    tok_info_init(token * tok, asm_data * asm_data, size_t itteration, int * minus_count);
 
-int is_jump(int cmd_type);
+int    is_jump(int cmd_type);
 
-int is_register(char * str);
+int    is_register(char * str);
 
-int check_tkn_for_string(char * str);
+int    check_tkn_for_string(char * str);
 
-int check_tkn_for_num(char * str);
+int    check_tkn_for_num(char * str);
 
-int check_tkn_for_label(char * str);
+int    check_tkn_for_label(char * str);
 
-int get_type(char * str);
+int    get_type(char * str);
 
-int labels_init(asm_data * asm_data);
+int    labels_init(asm_data * asm_data);
 
-int check_toks_arr(struct token * tok_arr, size_t num_of_toks, asm_data asm_data);
+int    check_toks_arr(struct token * tok_arr, size_t num_of_toks, asm_data asm_data);
 
-int get_out_arr_len(token * tok_arr, size_t arr_len);
+int    get_out_arr_len(token * tok_arr, size_t arr_len);

@@ -18,10 +18,10 @@ int run_cpu(FILE * in_stream)
     fread(cpu.executable_code_array, sizeof(int), num_of_symbols, in_stream);
     fclose(in_stream);
 
-    for (size_t i = 0; i < array_length; i++)
+    /*for (size_t i = 0; i < array_length; i++)
     {
         printf("%d\n", cpu.executable_code_array[i]);
-    }
+    }*/
 
     if (execute_code(cpu.executable_code_array, array_length, &cpu.cpu_stack))
     {
@@ -52,7 +52,9 @@ int execute_code(int * array, size_t len, my_stack * stk)
 
     for (size_t i = 0; i < len; i++)
     {
-        //printf("loop exe code entered\n");
+        // printf("loop exe code entered\n");
+
+        // Заменить на switch
 
         if (array[i] == HLT)
         {
@@ -156,7 +158,7 @@ int execute_code(int * array, size_t len, my_stack * stk)
             continue;
         }*/ //сделать из этого попр
 
-        if (array[i] == JUMP)
+        if (array[i] == JMP)
         {
             i = (size_t) (array[i+1] - 1);
             continue;
@@ -174,6 +176,22 @@ int execute_code(int * array, size_t len, my_stack * stk)
             stack_pop (stk, &val1);
             printf("OUT: %d\n", val1);
 
+            continue;
+        }
+
+        if (array[i] == MOD)
+        {
+            if (stk->elemAmt < 2)
+            {
+                printf("Error: cannot MOD elements, there are less than two elements in stack\n");
+                abort();
+            }
+
+            int val1 = 0, val2 = 0;
+            stack_pop (stk, &val1);
+            stack_pop (stk, &val2); 
+            stack_push(stk, (val2 % val1));
+            
             continue;
         }
 

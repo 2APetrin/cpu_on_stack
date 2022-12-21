@@ -12,49 +12,36 @@ struct cpu_s
 {
     struct my_stack   cpu_stack;
     elem            * executable_code_array;
-    //elem            * cpu_ram; // зачем нужна оперативная память?
+    //elem            * cpu_ram;
     elem              register_ax;
     elem              register_bx;
     elem              register_cx;
     elem              register_dx;
 };
 
-enum ErrorCodes
+enum cmd_codes
 {
-    BAD_STK_POINTER  = 1,
-    BAD_DATA_POINTER = 2,
-    BIG_ELEM_AMT     = 4,
-    BAD_STK_NAME     = 8,
-    BAD_CAPACITY     = 16,
-    BAD_STK_FILENAME = 32,
-    BAD_STK_FUNCNAME = 64
-};
-
-enum ResizeCodes
-{
-    SIZEUP   = 1,
-    SIZEDOWN = 0
-};
-
-enum CmdCodes
-{
-    ERROR = -1,
-    HLT   = 0,
-    PUSH  = 1,
-    ADD   = 2,
-    SUB   = 3,
-    MUL   = 4,
-    DIV   = 5,
-    OUT   = 6,
-    POPR  = 7, // изменить на pop ax
-    PUSHR = 8,
-    JUMP  = 9,
-    LABEL = 1000,
-    AX    = 1001,
-    BX    = 1002,
-    CX    = 1003,
-    DX    = 1004,
-    NUM   = 3802
+    ERROR  = -1,
+    HLT    = 0,
+    PUSH   = 1,
+    ADD    = 2,
+    SUB    = 3,
+    MUL    = 4,
+    DIV    = 5,
+    OUT    = 6,
+    POP    = 7,
+    PUSHR  = 8,
+    JMP    = 9,
+    IN     = 10,
+    CALL   = 11,
+    RET    = 12,
+    JMP_B  = 13,
+    JMP_BE = 14,
+    JMP_A  = 15,
+    JMP_AE = 16,
+    JMP_E  = 17,
+    JMP_NE = 18,
+    MOD    = 19
 };
 
 FILE * open_inputfile(const char * filename);

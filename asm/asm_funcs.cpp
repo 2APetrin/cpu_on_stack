@@ -52,15 +52,16 @@ void run_asm(FILE * in_stream, FILE * out_stream) // дописать call
             }
             if (asm_data.toks_array[i].tok_type == REGISTER)
             {
-                asm_data.out_array[i - minus_count] = asm_data.toks_array[i].cmd_type;
+                asm_data.out_array[i - minus_count] = asm_data.toks_array[i].cmd_type; //номера регистров пишутся в цмд тайп, все норм
             }
         }
 
-        for (int i = 0; i < asm_data.out_arr_len; i++)
-            printf("%d\n", asm_data.out_array[i]);
+        /*for (int i = 0; i < asm_data.out_arr_len; i++)
+            printf("%d\n", asm_data.out_array[i]);*/
         
         fwrite(asm_data.out_array, sizeof(int), (size_t) asm_data.out_arr_len, out_stream);
 
+        printf("Compilation OK\n");
         free(asm_data.out_array);
     }
     else
@@ -504,6 +505,11 @@ int get_type(char * str)
         return DX;
     }
 
+    if (!strcmp(str, "mod"))
+    {
+        return MOD;
+    }
+
     return ERROR;
 }
 
@@ -598,7 +604,7 @@ int get_out_arr_len(token * tok_arr, size_t arr_len)
     for (size_t i = 0; i < arr_len; i++)
     {
         if (tok_arr[i].tok_type != LABEL) count++;
-    }
+    }  
 
     return count;
 }
