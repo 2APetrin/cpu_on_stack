@@ -67,7 +67,7 @@ enum cmd_codes
     JMP_AE = 16,
     JMP_E  = 17,
     JMP_NE = 18,
-    MOD    = 19
+    //MOD    = 19
 };
 
 enum register_number

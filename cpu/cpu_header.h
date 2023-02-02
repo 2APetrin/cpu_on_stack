@@ -7,17 +7,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-struct cpu_s
+typedef struct cpu_s
 {
-    struct my_stack   cpu_stack;
-    elem            * executable_code_array;
-    //elem            * cpu_ram;
-    elem              register_ax;
-    elem              register_bx;
-    elem              register_cx;
-    elem              register_dx;
-};
+    struct my_stack stack;
+    size_t exe_code_len;
+    int *  exe_code_arr;
+    int *  ram;
+    int    reg_ax;
+    int    reg_bx;
+    int    reg_cx;
+    int    reg_dx;
+} cpu;
 
 enum cmd_codes
 {
@@ -40,9 +40,17 @@ enum cmd_codes
     JMP_A  = 15,
     JMP_AE = 16,
     JMP_E  = 17,
-    JMP_NE = 18,
-    MOD    = 19
+    JMP_NE = 18
 };
+
+enum register_number
+{
+    AX = 1,
+    BX = 2,
+    CX = 3,
+    DX = 4
+};
+
 
 FILE * open_inputfile(const char * filename);
 
@@ -50,8 +58,14 @@ FILE * open_outputfile(const char * filename);
 
 int    run_cpu(FILE * in_stream);
 
-size_t get_num_of_symbols(FILE * in_stream);
+int    cpu_ctor(cpu * cpu);
 
-int    execute_code(int * array, size_t len, my_stack * stk);
+int    get_num_of_symbols(cpu * cpu, FILE * in_stream);
 
-int    cpu_ctor(struct cpu_s * proc);
+int    get_exe_arr(cpu * cpu, FILE * in_stream);
+
+int    execute_code(cpu cpu);
+
+int get_register_val(int * ret_val, int reg_num, cpu cpu);
+
+int register_fill(int reg_num, int value, cpu cpu);

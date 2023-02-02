@@ -32,7 +32,14 @@ struct my_stack
     struct var_info stack_info;
 };
 
-enum err_stk_codes
+enum DumpEnterReasons
+{
+    DUMP_ENTRY       = 0,
+    DUMP_EXITING     = 1,
+    DUMP_FOR_ERROR   = 2
+};
+
+enum ErrorCodes
 {
     BAD_STK_POINTER  = 1,
     BAD_DATA_POINTER = 2,
@@ -49,12 +56,6 @@ enum ResizeCodes
     SIZEDOWN = 0
 };
 
-enum DumpEnterReasons
-{
-    DUMP_ENTRY       = 0,
-    DUMP_EXITING     = 1,
-    DUMP_FOR_ERROR   = 2
-};
 
 int    open_logfile(const char * filename);
 

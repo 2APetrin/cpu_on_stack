@@ -277,15 +277,25 @@ int tok_info_init(token * tok, asm_data * asm_data, size_t itteration, int * min
             return 1;
         }
 
-        if (itteration == 0 || !(asm_data->toks_array[itteration - 1].tok_type == CMD && is_jump(asm_data->toks_array[itteration - 1].cmd_type)))
+        if (itteration == 0)
         {
             asm_data->labels_array[tok->val] = (int) itteration - *minus_count;
             asm_data->labels_count_array[tok->val] += 1;
+
+            *minus_count += 1;
             
             return 0;
         }
 
-        *minus_count += 1;
+        if (!(asm_data->toks_array[itteration - 1].tok_type == CMD && is_jump(asm_data->toks_array[itteration - 1].cmd_type)))
+        {
+            asm_data->labels_array[tok->val] = (int) itteration - *minus_count;
+            asm_data->labels_count_array[tok->val] += 1;
+
+            *minus_count += 1;
+            
+            return 0;
+        }
 
         return 0;
     }
@@ -505,10 +515,10 @@ int get_type(char * str)
         return DX;
     }
 
-    if (!strcmp(str, "mod"))
+    /*if (!strcmp(str, "mod"))
     {
         return MOD;
-    }
+    }*/
 
     return ERROR;
 }
