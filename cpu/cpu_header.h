@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define ACCURACY 100
+
 typedef struct cpu_s
 {
     struct my_stack stack;
@@ -40,7 +42,11 @@ enum cmd_codes
     JMP_A  = 15,
     JMP_AE = 16,
     JMP_E  = 17,
-    JMP_NE = 18
+    JMP_NE = 18,
+    SQRT   = 19,
+    NROOTS = 20,
+    ALLNUM = 21,
+    CAST   = 22
 };
 
 enum register_number
@@ -66,6 +72,6 @@ int    get_exe_arr(cpu * cpu, FILE * in_stream);
 
 int    execute_code(cpu cpu);
 
-int get_register_val(int * ret_val, int reg_num, cpu cpu);
+int    get_register_val(int * ret_val, int reg_num, cpu * cpu);
 
-int register_fill(int reg_num, int value, cpu cpu);
+int    register_fill(int reg_num, int value, cpu * cpu);

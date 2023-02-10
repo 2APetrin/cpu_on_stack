@@ -74,7 +74,7 @@ int execute_code(cpu cpu)
                     for (int t = 0; t < (int) reps; t++)
                     {
                         stack_pop(&cpu.stack, &k);
-                        printf("%d\n", k);
+                        printf("%d\n", k / ACCURACY);
                     }
                 }
 
@@ -107,7 +107,7 @@ int execute_code(cpu cpu)
             {
                 if (cpu.stack.elemAmt < 2)
                 {
-                    printf("Error: cannot ADD elements, there are less than two elements in stack\n");
+                    printf("Error: cannot SUB elements, there are less than two elements in stack\n");
                     return 1;
                 }
 
@@ -122,14 +122,14 @@ int execute_code(cpu cpu)
             {
                 if (cpu.stack.elemAmt < 2)
                 {
-                    printf("Error: cannot ADD elements, there are less than two elements in stack\n");
+                    printf("Error: cannot MUL elements, there are less than two elements in stack\n");
                     return 1;
                 }
 
                 int val1 = 0, val2 = 0;
                 stack_pop (&cpu.stack, &val1);
                 stack_pop (&cpu.stack, &val2); 
-                stack_push(&cpu.stack, (val2 * val1));
+                stack_push(&cpu.stack, (val2 * val1) / ACCURACY);
             }
                 break;
             
@@ -137,14 +137,14 @@ int execute_code(cpu cpu)
             {
                 if (cpu.stack.elemAmt < 2)
                 {
-                    printf("Error: cannot ADD elements, there are less than two elements in stack\n");
+                    printf("Error: cannot DIV elements, there are less than two elements in stack\n");
                     return 1;
                 }
 
                 int val1 = 0, val2 = 0;
                 stack_pop (&cpu.stack, &val1);
                 stack_pop (&cpu.stack, &val2); 
-                stack_push(&cpu.stack, (val2 / val1));
+                stack_push(&cpu.stack, (int) (((double) val2 / (double) val1) * ACCURACY));
             }
                 break;
             
@@ -158,7 +158,7 @@ int execute_code(cpu cpu)
 
                 int val1 = 0;
                 stack_pop (&cpu.stack, &val1);
-                printf("OUT: %d\n", val1);
+                printf("OUT: %.2lf\n", ((double) val1) / ACCURACY);
             }
                 break;
             
@@ -167,9 +167,9 @@ int execute_code(cpu cpu)
                 int val = 0;
                 stack_pop (&cpu.stack, &val);
 
-                printf("pop val = %d\n", val);
+                //printf("pop val = %d\n", val);
 
-                if (register_fill(cpu.exe_code_arr[i++], val, cpu)) // мне не нравится этот движ с инкрементами, если что, надо за ними следить
+                if (register_fill(cpu.exe_code_arr[++i], val, &cpu)) // мне не нравится этот движ с инкрементами, если что, надо за ними следить
                     return 1;
             }
                 break;
@@ -178,10 +178,10 @@ int execute_code(cpu cpu)
             {
                 int val = 0;
 
-                if (get_register_val(&val, cpu.exe_code_arr[i++], cpu))
+                if (get_register_val(&val, cpu.exe_code_arr[++i], &cpu))
                     return 1;
 
-                printf("pushr val = %d\n", val);
+                //printf("pushr val = %d\n", val);
 
                 stack_push(&cpu.stack, val);
             }
@@ -197,10 +197,12 @@ int execute_code(cpu cpu)
             
             case IN:
             {
-                int val = 0;
-                scanf("%d", &val);
+                double val = 0;
+                scanf("%lg", &val);
 
-                stack_push(&cpu.stack, val);
+                printf("printf in in - %d\n", (int) (val * ACCURACY));
+
+                stack_push(&cpu.stack, (int) (val * ACCURACY));
             }
                 break;
             
@@ -221,7 +223,7 @@ int execute_code(cpu cpu)
                 stack_pop(&cpu.stack, &val);
                 //printf("%lu poped\n", val);
 
-                i = (val);
+                i = val;
             }
                 break;
             
@@ -243,7 +245,7 @@ int execute_code(cpu cpu)
                 }
                 else
                 {
-                    i += 2;
+                    i += 1;
                 }
             }
                 break;
@@ -266,7 +268,7 @@ int execute_code(cpu cpu)
                 }
                 else
                 {
-                    i += 2;
+                    i += 1;
                 }
             }
                 break;
@@ -289,7 +291,7 @@ int execute_code(cpu cpu)
                 }
                 else
                 {
-                    i += 2;
+                    i += 1;
                 }
             }
                 break;
@@ -312,7 +314,7 @@ int execute_code(cpu cpu)
                 }
                 else
                 {
-                    i += 2;
+                    i += 1;
                 }
             }
                 break;
@@ -335,7 +337,7 @@ int execute_code(cpu cpu)
                 }
                 else
                 {
-                    i += 2;
+                    i += 1;
                 }
             }
                 break;
@@ -358,8 +360,58 @@ int execute_code(cpu cpu)
                 }
                 else
                 {
-                    i += 2;
+                    i += 1;
                 }
+            }
+                break;
+            
+            case SQRT:
+            {
+                if (cpu.stack.elemAmt < 1)
+                {
+                    printf("Error: cannot sqrt elements, there are less than one element in stack\n");
+                    return 1;
+                }
+
+                int val = 0;
+                stack_pop (&cpu.stack, &val);
+
+                if (val < 0)
+                {
+                    printf("Error: sqrt val is below zero\n");
+                    return 1;
+                }
+                //val = (int)sqrt((double) val);
+                //printf("%lg\n", sqrt(val));
+                //printf("sqrt print - %d\n", (int) (sqrt(val) * sqrt(ACCURACY)));
+                stack_push(&cpu.stack, (int) (sqrt(val) * sqrt(ACCURACY)));
+            }
+                break;
+            
+            case NROOTS:
+            {
+                printf("There are no roots in ur equation\n");
+            }
+                break;
+            
+            case ALLNUM:
+            {
+                printf("Every number fits\n");
+            }
+                break;
+            
+            case CAST:
+            {
+                //printf("cock\n");
+                if (cpu.stack.elemAmt < 1)
+                {
+                    printf("Error: cannot cast element, there is less than one element in stack\n");
+                    return 1;
+                }
+
+                int val = 0;
+                stack_pop(&cpu.stack, &val);
+                val++;
             }
                 break;
             
@@ -375,31 +427,32 @@ int execute_code(cpu cpu)
     return 0;
 }
 
-int get_register_val(int * ret_val, int reg_num, cpu cpu)
+int get_register_val(int * ret_val, int reg_num, cpu * cpu)
 {
+    //printf("reg num in get_register_val - %d\n", reg_num);
     switch (reg_num)
     {
         case AX:
         {
-            *ret_val = cpu.reg_ax;
+            *ret_val = cpu->reg_ax;
         }
             break;
         
         case BX:
         {
-            *ret_val = cpu.reg_bx;
+            *ret_val = cpu->reg_bx;
         }
             break;
         
         case CX:
         {
-            *ret_val = cpu.reg_cx;
+            *ret_val = cpu->reg_cx;
         }
             break;
         
         case DX:
         {
-            *ret_val = cpu.reg_dx;
+            *ret_val = cpu->reg_dx;
         }
             break;
         
@@ -414,31 +467,32 @@ int get_register_val(int * ret_val, int reg_num, cpu cpu)
     return 0;
 }
 
-int register_fill(int reg_num, int value, cpu cpu)
+int register_fill(int reg_num, int value, cpu * cpu)
 {
+    //printf("reg fill value = %d\n", value);
     switch (reg_num)
     {
         case AX:
         {
-            cpu.reg_ax = value;
+            cpu->reg_ax = value;
         }
             break;
         
         case BX:
         {
-            cpu.reg_bx = value;
+            cpu->reg_bx = value;
         }
             break;
         
         case CX:
         {
-            cpu.reg_cx = value;
+            cpu->reg_cx = value;
         }
             break;
         
         case DX:
         {
-            cpu.reg_dx = value;
+            cpu->reg_dx = value;
         }
             break;
         

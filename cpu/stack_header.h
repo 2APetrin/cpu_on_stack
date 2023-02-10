@@ -71,7 +71,7 @@ int    stack_dtor(my_stack * stk);
 
 void   stack_push(my_stack * stk, elem val);
 
-void   stack_pop(my_stack * stk, int * var);
+void   stack_pop(my_stack * stk, elem  * var);
 
 int    stack_resize(int size_cmd, my_stack * stk);
 

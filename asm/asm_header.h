@@ -8,6 +8,7 @@
 #include <ctype.h>
 #include "filework_header.h"
 
+#define ACCURACY 100
 
 struct token
 {
@@ -67,7 +68,10 @@ enum cmd_codes
     JMP_AE = 16,
     JMP_E  = 17,
     JMP_NE = 18,
-    //MOD    = 19
+    SQRT   = 19,
+    NROOTS = 20,
+    ALLNUM = 21,
+    CAST   = 22
 };
 
 enum register_number

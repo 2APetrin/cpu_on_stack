@@ -258,7 +258,12 @@ int tok_info_init(token * tok, asm_data * asm_data, size_t itteration, int * min
 
     if (check_tkn_for_num(tok->text))
     {
-        sscanf(tok->text, "%d", &tok->val);
+        double val = NAN;
+
+        sscanf(tok->text, "%lf", &val);
+
+        tok->val = (int) (val * ACCURACY);
+
         tok->tok_type = NUM;
         //printf("num = %d\n", tkn->val);
 
@@ -361,7 +366,7 @@ int check_tkn_for_num(char * str)
 
     for (; str[i]; i++)
     {
-        if (!(isdigit(str[i])))
+        if (!(isdigit(str[i]) || str[i] == '.'))
             return 0;
     }
 
@@ -493,6 +498,26 @@ int get_type(char * str)
     if (!strcmp(str, "ret"))
     {
         return RET;
+    }
+
+    if (!strcmp(str, "sqrt"))
+    {
+        return SQRT;
+    }
+
+    if (!strcmp(str, "noroots"))
+    {
+        return NROOTS;
+    }
+
+    if (!strcmp(str, "allnum"))
+    {
+        return ALLNUM;
+    }
+
+    if (!strcmp(str, "cast"))
+    {
+        return CAST;
     }
 
     if (!strcmp(str, "ax"))
