@@ -4,9 +4,9 @@ FILE * logfile = NULL;
 
 int main(void)
 {
-    open_logfile("log.txt");
+    open_logfile("../cpu/logs/stack_log.txt");
 
-    FILE * codefile = open_inputfile("/home/tony/Code/my_stack/asm/test.code");
+    FILE * codefile = open_inputfile("../code/exe.code");
     if (run_cpu(codefile))
     {
         printf("Execution failed\n");

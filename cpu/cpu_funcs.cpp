@@ -158,7 +158,7 @@ int execute_code(cpu cpu)
 
                 int val1 = 0;
                 stack_pop (&cpu.stack, &val1);
-                printf("OUT: %.2lf\n", ((double) val1) / ACCURACY);
+                printf("OUT: %.3lg\n", ((double) val1) / ACCURACY);
             }
                 break;
             
@@ -198,9 +198,9 @@ int execute_code(cpu cpu)
             case IN:
             {
                 double val = 0;
-                scanf("%lg", &val);
+                scanf("%lf", &val);
 
-                printf("printf in in - %d\n", (int) (val * ACCURACY));
+                //printf("printf in in - %d\n", (int) (val * ACCURACY));
 
                 stack_push(&cpu.stack, (int) (val * ACCURACY));
             }
