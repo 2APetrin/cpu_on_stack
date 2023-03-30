@@ -14,7 +14,7 @@ typedef struct cpu_s
     struct my_stack stack;
     size_t exe_code_len;
     int *  exe_code_arr;
-    int *  ram;
+    //int *  ram;
     int    reg_ax;
     int    reg_bx;
     int    reg_cx;
@@ -35,7 +35,8 @@ enum cmd_codes
     PUSHR  = 8,
     JMP    = 9,
     IN     = 10,
-    CALL   = 11,
+    CALL   = 11, //сделать отдельный стек для call'ов
+                 // сделать рекурсивную прогу для проверки call
     RET    = 12,
     JMP_B  = 13,
     JMP_BE = 14,

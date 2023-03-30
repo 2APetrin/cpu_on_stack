@@ -582,45 +582,7 @@ int check_toks_arr(struct token * tok_arr, size_t num_of_toks, asm_data asm_data
         {
             printf("Error: push without argument in line: %lu\n", tok_arr[i-1].line);
             return_flag = 1;
-        }
-
-        if (tok_arr[i-1].tok_type == CMD && tok_arr[i-1].cmd_type != PUSH && tok_arr[i].tok_type == NUM)
-        {
-            printf("Error: too many arguments in line: %lu\n", tok_arr[i-1].line);
-            return_flag = 1;
-        }
-
-        if (tok_arr[i-1].tok_type == CMD && is_jump(tok_arr[i-1].cmd_type) && tok_arr[i].tok_type != LABEL_JMP)
-        {
-            printf("Error: jump without argument in line: %lu\n", tok_arr[i-1].line);
-            return_flag = 1;
-        }
-
-        if (tok_arr[i].tok_type == LABEL_JMP && tok_arr[i].val == -1)
-        {
-            printf("Error: undeclaired label %s in line %lu\n", tok_arr[i].text, tok_arr[i].line);
-            return_flag = 1;
-        }
-
-        if (tok_arr[i-1].tok_type == CMD && tok_arr[i-1].cmd_type == POP && tok_arr[i].tok_type != REGISTER)
-        {
-            printf("Error: pop without argument in line: %lu\n", tok_arr[i-1].line);
-            return_flag = 1;
-        }
-
-        if (tok_arr[i-1].tok_type == CMD && tok_arr[i-1].cmd_type == PUSHR && tok_arr[i].tok_type != REGISTER)
-        {
-            printf("Error: pushr without argument in line: %lu\n", tok_arr[i-1].line);
-            return_flag = 1;
-        }
-    }
-
-    if (tok_arr[0].tok_type == NUM) // убрать ошибку с hlt, он может использоваться в неск. частях кода
-    {
-        printf("Error: number can't be first command in line: %lu\n", tok_arr[0].line);
-        return_flag = 1;
-    }
-
+number can't be first command in line:
     for (int i = 0; i < NUM_OF_LABELS; i++)
     {
         if (asm_data.labels_count_array[i] > 1)

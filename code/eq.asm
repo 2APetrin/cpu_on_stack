@@ -1,7 +1,6 @@
 in
 in
 in
-
     pop cx 
     pop bx 
     pop ax 
@@ -71,6 +70,7 @@ in
     out
 
     hlt
+
 
 :1
     push 0

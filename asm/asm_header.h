@@ -83,9 +83,25 @@ enum register_number
 };
 
 
+//! @brief Runs the main process of assembly
+//! 
+//! @param [in] in_stream input stream of asm code
+//! @param [in] out_stream output stream into file with binary code
+
 void   run_asm(FILE * in_stream, FILE * out_stream);
 
+
+//! @brief Function that fill in the asm_data struct with needed data. Makes tokens from text
+//!
+//! @param [in] in_stream input stream of asm code
+//! @param [in] asm_data pointer to struct which contains data of asm code
+
 int    asm_ctor(FILE * in_stream, asm_data * asm_data);
+
+
+//! @brief Gets number of any type tokens
+//!
+//! 
 
 size_t get_num_of_tokens(char * prog_text, size_t num_of_toks);
 
